@@ -28,15 +28,17 @@ Route::middleware('auth')->group(function () {
 });
 Route::middleware(['auth', 'verified'])
 ->prefix('admin')
+->name('admin.')
 ->group(function () {
     Route::get('/profile', [DashboardController::class, 'index'])->name('home.index');
     Route::get('/portfolio/create', [DashboardController::class, 'create'])->name('portfolio.create');
-    Route::get("admin/portfolio/{project}", [DashboardController::class, "show"])->name("portfolio.show");
+    Route::get("/portfolio/{project}", [DashboardController::class, "show"])->name("portfolio.show");
     Route::post("/portfolio", [DashboardController::class, "store"])->name("portfolio.store");
     Route::patch('/profile', [DashboardController::class, 'update'])->name('admin.update');
-    Route::get("admin/portfolio/{project}/edit", [DashboardController::class, "edit"])->name("portfolio.edit");
+    Route::get("/portfolio/{project}/edit", [DashboardController::class, "edit"])->name("portfolio.edit");
     Route::put("/portfolio/{project}", [DashboardController::class, "update"])->name("portfolio.update");
-    Route::delete('/delete/{project}', [DashboardController::class, 'destroy'])->name('admin.destroy');
+    Route::delete('/delete/{project}', [DashboardController::class, 'destroy'])->name('portfolio.destroy');
+    Route::delete('/portfolio', [DashboardController::class, 'logout'])->name('admin.logout');
 });
 
 require __DIR__.'/auth.php';

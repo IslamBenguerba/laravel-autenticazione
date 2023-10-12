@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\PorjectRequest;
 use App\Models\Project;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
 {
@@ -36,46 +40,52 @@ class DashboardController extends Controller
             return view("portfolio.create");
         }
     
-        public function store(Request $request)
+        public function store(PorjectRequest $request)
         {
-            $data = $request->validate([
-                "titolo" => "required|string",
-                "descrizione" => "required|string",
-                "link_git_hub" => "nullable|string",
-            ]);
-    
+            $data = $request->validated();
+            // $data = $request->validate([
+            //     // "titolo" => "nullable|string|max:255",
+            //     // "descrizione" => "required|string",
+            //     // "link_git_hub" => "nullable|string",
+            //     // "image" => 'require|image'
+            // ]);
+            $data["image"] = Storage::put("newProject", $data["image"]);
             $newProject = new Project();
     
             $newProject->fill($data);
     
             $newProject->save();
     
-            return redirect()->route('home.index', $newProject);
+            return redirect()->route('admin.home.index', $newProject);
         }
     
         public function destroy($id){
             $project = Project::findOrFail($id);
     
             $project->delete();
-            return redirect()->route("home.index");
+            return redirect()->route("admin.home.index");
         }
 
         public function edit($id)
         {
             $project = Project::findOrFail($id);
+
             return view("portfolio.edit", ["project" => $project]);
         }
 
-        public function update(Request $request, $id)
+        public function update(PorjectRequest $request, $id)
         {
             $project = Project::findOrFail($id);
-            $data = $request->validate([
-                "titolo" => "required|string",
-                "descrizione" => "required|string",
-                "link_git_hub" => "nullable|string",
-            ]);
+            $data = $request->validated();
+            
+            $data["image"] = Storage::put("newProject", $data["image"]);
             $project->update($data);
     
-            return redirect()->route('portfolio.show', $project->id);
+            return redirect()->route('admin.portfolio.show', $project->id);
+        }
+        public function logout()
+        {
+            Auth::logout();
+            return redirect()->route('portfolio.homepage');
         }
 }

@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+        @vite(['resources/scss/app.scss']) 
     <title> @yield('title')</title>
 </head>
 
@@ -19,7 +19,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a href="{{route('login')}}">accedi</a>
+                    @if(Route::is('admin.*'))
+                        {{-- <a href="{{Auth::logout()}}">esci</a> --}}
+                        <a href="/dashboard">Menu</a>
+                    @endif
+                    @if(Route::is('.*'))
+                        <a href="{{route('login')}}">accedi</a>
+                    @endif
+                    
                 </div>
             </div>
         </div>

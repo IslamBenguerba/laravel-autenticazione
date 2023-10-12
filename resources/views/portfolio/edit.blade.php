@@ -7,7 +7,7 @@
         <div class="row justify-content-center my-3">
             <div class="col-6">
 
-                <form action="{{ route('portfolio.update', $project->id) }}" method="POST">
+                <form action="{{ route('admin.portfolio.update', $project->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf()
                     @method('put')
 
@@ -46,16 +46,22 @@
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">Data ultimo commit</label>
                         <div class="col-sm-10">
-                            <input type="date" class="form-control @error('sale_date') is-invalid @enderror"
-                                value="{{ old('sale_date', $project->sale_date) }}" name="sale_date">
-                            @error('sale_date')
+                            <input type="date" class="form-control @error('update_date') is-invalid @enderror"
+                            {{-- metodo per modificare la data poichè l form si aspetta la data in questo formato --}}
+                                value="{{ old('update_date', \Carbon\Carbon::parse($project->update_date)->format('Y-m-d')) }}" name="update_date">
+                            @error('update_date')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupFile01" name="image">Upload</label>
+                        <input type="file" class="form-control" id="inputGroupFile01" name="image">
+                      </div>
+
 
                     <div class="d-flex justify-content-between">
-                        <a class="btn btn-secondary" href="{{ route('home.index') }}">Annulla</a>
+                        <a class="btn btn-secondary" href="{{ route('admin.home.index') }}">Annulla</a>
                         <button class="btn btn-primary">Salva</button>
                         {{-- <form action="{{ route('comic.destroy', $comic->id) }}" method="POST">
                             @csrf

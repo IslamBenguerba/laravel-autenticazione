@@ -2,9 +2,9 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
-            <a href="{{ route('portfolio.create') }}">Crea un post</a>
-            <a class="nav-link active" aria-current="page" href="{{ route('home.index') }}">Home Admin</a>
-            <a class="nav-link" href="{{ route('portfolio.create') }}">Aggiungi</a>
+            <a href="{{ route('admin.portfolio.create') }}">Crea un post</a>
+            <a class="nav-link active" aria-current="page" href="{{ route('admin.home.index') }}">Home Admin</a>
+            <a class="nav-link" href="{{ route('admin.portfolio.create') }}">Aggiungi</a>
 
         </h2>
     </x-slot>

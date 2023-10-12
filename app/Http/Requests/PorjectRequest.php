@@ -1,8 +1,11 @@
 <?php
 
+// namespace App\Http\Requests;
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class PorjectRequest extends FormRequest
 {
@@ -11,7 +14,7 @@ class PorjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +26,10 @@ class PorjectRequest extends FormRequest
     {
         return [
             //
+            "titolo" => "nullable|string|max:255",
+            "descrizione" => "required|string",
+            "link_git_hub" => "nullable|string",
+            "image" => "nullable|image|max:6000"
         ];
     }
 }

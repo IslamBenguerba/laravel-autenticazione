@@ -11,6 +11,8 @@ class Project extends Model
     protected $fillable =[
         'titolo',
         'descrizione',
-        'link_git_hub'
+        'link_git_hub',
+        'update_date',
+        'image'
     ];
 }

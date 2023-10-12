@@ -6,8 +6,7 @@
     <div class="container">
         <div class="row justify-content-center my-3">
             <div class="col-6">
-
-                <form action="{{ route('portfolio.store') }}" method="POST">
+                <form action="{{ route('admin.portfolio.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf()
 
                     <div class="row mb-3">
@@ -42,6 +41,10 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupFile01" name="image">Upload</label>
+                        <input type="file" class="form-control" id="inputGroupFile01" name="image">
+                      </div>
 
                     <div class="text-center">
                         <a class="btn btn-secondary" href="\">annulla</a>
